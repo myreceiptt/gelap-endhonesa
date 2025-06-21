@@ -264,7 +264,7 @@ const TokenClaim: React.FC = () => {
               console.error("Error refetching claim condition:", error);
             }
           }}>
-          {erc20Claimed ? "Klaim Lagi Besok" : "Klaim Sekarang"}
+          {erc20Claimed ? "Sudah Diklaim" : "Klaim Sekarang"}
         </ClaimButton>
         <h4
           className={`text-center text-xs font-medium font-[family-name:var(--font-geist-mono)] transition-all duration-700
@@ -281,7 +281,7 @@ const TokenClaim: React.FC = () => {
             <Loader message="Ceki... Ceki..." />
           )}{" "}
           OiOi. Total ada {currentSupply} OiOi yang sudah diklaim. Sekali klaim
-          maksimal {amount} OiOi. Kamu bisa klaim sehari sekali. Batas klaim
+          maksimal {amount} OiOi. Kamu hanya bisa klaim sekali saja. Batas klaim
           sampai 17 Agustus 2025.
         </h4>
       </div>
