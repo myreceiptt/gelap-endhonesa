@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GELAP ENDHONESA
 
-## Getting Started
+`gelap-endhonesa` is a frozen ENDHONESA artefact app built with Next.js, React, Tailwind CSS, and Thirdweb.
 
-First, run the development server:
+The app presents the **ENDHONESA - Gelap, OiOi!!!!** experience and includes a wallet connection plus OiOi token claim interface. The claim copy and deadline are intentionally preserved as an artefact: the claim window has already passed, including the **17 Agustus 2025** text.
+
+## Live URL
+
+- Production: `https://gelap.endhonesa.com/`
+- Current availability check may return Vercel Challenge `HTTP 429`; under the Evergreen Standard this counts as reachable but blocked.
+
+## Tech Stack
+
+- Next.js 16.2.6 with App Router and Turbopack build
+- React 19.2.6
+- Tailwind CSS 4.3.0
+- Thirdweb 5.120.0
+- Vercel Analytics 2.0.1
+- TypeScript 5.9.3
+- pnpm 11.5.0
+- Node.js 24.x
+
+## Local Development
+
+Use Node.js 24 and pnpm 11.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+nvm use
+corepack pnpm install
+corepack pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create `.env.local` from `.env.example` when wallet functionality needs to work against Thirdweb.
 
-## Learn More
+```bash
+cp .env.example .env.local
+```
 
-To learn more about Next.js, take a look at the following resources:
+Required variable:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+NEXT_PUBLIC_TW_CLIENT_ID=
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`NEXT_PUBLIC_TW_CLIENT_ID` is public by design, but the real project value should still be managed through local/Vercel environment settings instead of being committed.
 
-## Deploy on Vercel
+Without this variable, the app still builds with an Evergreen placeholder client ID, but wallet functionality should be considered non-production until the real value is configured.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+corepack pnpm lint
+corepack pnpm build
+corepack pnpm start
+```
+
+## EVERGREEN Maintenance
+
+This repo is classified as **Class A — App Repo** under the Prof. NOTA EVERGREEN Standard.
+
+- Runtime target: **Node.js 24.x** (`.nvmrc`, `package.json#engines`)
+- Package manager: **pnpm 11.x** (`packageManager: pnpm@11.5.0`)
+- Lockfile: `pnpm-lock.yaml`
+- Build command: `corepack pnpm build`
+- Lint command: `corepack pnpm lint`
+
+### Current Evergreen Status
+
+- Monthly safe updates are applied.
+- Quarterly major updates applied: Next.js 16, Vercel Analytics 2, Tailwind CSS 4.3, Node types 24, and pnpm 11 metadata.
+- Package manager was normalized to pnpm; stale `package-lock.json` was removed.
+- `next lint` was replaced with `eslint .` because Next.js no longer supports the old lint command.
+- Claim status is intentionally frozen as an artefact; the claim deadline has passed and the user-facing copy is preserved.
+- `typescript@6` is intentionally deferred because current Solana/Thirdweb transitive packages peer to TypeScript 5.x.
+- `eslint@10` was tested and deferred because the current Next/TypeScript ESLint parser stack fails with `scopeManager.addGlobals is not a function`.
+- `@types/node@25` is intentionally deferred because the app targets Node.js 24.x.
+- Remaining audit findings are moderate transitive issues in Next/PostCSS and Web3 wallet dependencies that currently require upstream package changes or risky overrides.
+
+### Evergreen Commands
+
+```bash
+nvm use
+corepack pnpm install
+corepack pnpm outdated
+corepack pnpm audit --audit-level moderate
+corepack pnpm lint
+corepack pnpm build
+```

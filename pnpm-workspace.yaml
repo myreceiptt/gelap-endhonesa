@@ -1,0 +1,27 @@
+packages:
+  - .
+
+allowBuilds:
+  bufferutil: false
+  keccak: false
+  sharp: true
+  utf-8-validate: false
+
+minimumReleaseAgeExclude:
+  - brace-expansion@1.1.12
+  - flatted@3.4.0
+  - h3@1.15.6
+  - h3@1.15.9
+  - flatted@3.4.2
+  - brace-expansion@1.1.13
+  - picomatch@2.3.2
+  - picomatch@4.0.4
+  - yaml@1.10.3
+  - defu@6.1.5
+  - h3@1.15.5
+  - postcss@8.5.10
+  - ws@8.20.1
+  - uuid@11.1.1
+
+onlyBuiltDependencies:
+  - sharp

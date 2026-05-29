@@ -5,7 +5,7 @@
 // External libraries
 import Image from "next/image";
 import Link from "next/link";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   balanceOf,
   canClaim,
@@ -25,9 +25,8 @@ import Loader from "@/components/ReusableLoader";
 const TokenClaim: React.FC = () => {
   // All useState condition
   const [isActive, setIsActive] = useState(false);
-  const [erc20Claimed, setErc20Claimed] = useState(true);
+  const [erc20ClaimedOverride, setErc20ClaimedOverride] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [amount, setAmount] = useState<string>("0");
   const [pesanAwal, setPesanAwal] = useState<string | null>("Ceki... Ceki...");
   const [pesanTunggu, setPesanTunggu] = useState<string | null>(null);
   const [pesanKirim, setPesanKirim] = useState<string | null>(null);
@@ -81,18 +80,18 @@ const TokenClaim: React.FC = () => {
   console.log("Active Claim:", activeClaimCondition);
 
   // Set claim amount
-  useEffect(() => {
+  const amount = useMemo(() => {
     if (
       activeClaimCondition?.quantityLimitPerWallet &&
       tokenDecimals !== undefined
     ) {
-      setAmount(
-        (
-          activeClaimCondition?.quantityLimitPerWallet /
-          BigInt(10) ** BigInt(tokenDecimals)
-        ).toString()
-      );
+      return (
+        activeClaimCondition.quantityLimitPerWallet /
+        BigInt(10) ** BigInt(tokenDecimals)
+      ).toString();
     }
+
+    return "0";
   }, [activeClaimCondition?.quantityLimitPerWallet, tokenDecimals]);
 
   // Fetch can claim "result"
@@ -103,11 +102,8 @@ const TokenClaim: React.FC = () => {
   });
 
   // Set ERC20 claimed
-  useEffect(() => {
-    if (canClaimErc20 !== undefined) {
-      setErc20Claimed(!canClaimErc20.result);
-    }
-  }, [canClaimErc20]);
+  const erc20Claimed =
+    canClaimErc20 !== undefined ? !canClaimErc20.result : erc20ClaimedOverride;
 
   // Calculate current supply
   const currentSupply =
@@ -256,9 +252,9 @@ const TokenClaim: React.FC = () => {
               });
 
               if (!activeCondition20.result) {
-                setErc20Claimed(true);
+                setErc20ClaimedOverride(true);
               } else {
-                setErc20Claimed(false);
+                setErc20ClaimedOverride(false);
               }
             } catch (error) {
               console.error("Error refetching claim condition:", error);
