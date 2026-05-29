@@ -6,7 +6,7 @@ The app presents the **ENDHONESA - Gelap, OiOi!!!!** experience and includes a w
 
 ## Live URL
 
-- Production: `https://endhonesa.com/`
+- Production: `https://gelap.endhonesa.com/`
 - Current availability check may return Vercel Challenge `HTTP 429`; under the Evergreen Standard this counts as reachable but blocked.
 
 ## Tech Stack
